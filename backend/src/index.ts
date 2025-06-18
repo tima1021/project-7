@@ -2,6 +2,12 @@ import express from "express";
 import booksRouter from "./routes/book.route.js";
 import foodsRouter from "./routes/food.route.js";
 import authRouter from "./routes/auth.route.js";
+import mongoose from "mongoose";
+
+mongoose.connect(
+  "mongodb+srv://togtoh:oCyqBUJ5pbXFXdrJ@cluster0.rds2ass.mongodb.net/food-delivery"
+);
+
 const server = express();
 server.use(express.json());
 
@@ -14,6 +20,7 @@ console.log("books");
 server.get("/", (_req, res) => {
   res.send("hello");
 });
+
 server.listen(port, () => {
   console.log("nmg avraarai");
 });
