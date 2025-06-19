@@ -7,7 +7,11 @@ const user = new Schema({
   password: String,
   phoneNumber: Number,
   address: String,
-  role: String,
+  role: {
+    type: String,
+    enum: ["ADMIN", "USER"],
+    default: "USER",
+  },
   isVerified: Boolean,
   createdAt: Date,
   updatedAt: Date,

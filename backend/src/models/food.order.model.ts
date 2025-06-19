@@ -6,7 +6,11 @@ const foodOrder = new Schema({
   user: String,
   totalPrice: Number,
   foodOrderItems: String,
-  status: String,
+  status: {
+    type: String,
+    enum: ["PENDING ", "CANCELED", "DELIVERED"],
+    default: "PENDING",
+  },
   createdAt: Date,
   updatedAt: Date,
 });
