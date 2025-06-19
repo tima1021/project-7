@@ -10,11 +10,11 @@ import {
 
 const authRouter = express.Router();
 
-authRouter.get("/", authRefresh);
-authRouter.post("/", authSignIn);
-authRouter.post("/", authSignUp);
-authRouter.post("/", authResetPassReq);
-authRouter.post("/", authVerify);
-authRouter.post("/", authResetPass);
+authRouter.get("/refresh", authRefresh);
+authRouter.post("/sign-in/:email", authSignIn);
+authRouter.post("/sign-up", authSignUp);
+authRouter.post("/reset-password-request", authResetPassReq);
+authRouter.post("/verify-reset-password-request", authVerify);
+authRouter.post("/reset-password", authResetPass);
 
 export default authRouter;
