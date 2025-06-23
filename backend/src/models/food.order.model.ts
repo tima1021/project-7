@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { Food } from "./food.model.js";
 
 import { User } from "./user.model.js";
+import { FoodOrderItem } from "./food.order.item.model.js";
 
 const { Schema, model } = mongoose;
 
@@ -12,11 +13,11 @@ const foodOrder = new Schema({
       ref: User,
     },
   ],
-  totalPrice: Number,
+  totalPrice: { type: Number, required: true },
   foodOrderItems: [
     {
       type: Schema.ObjectId,
-      ref: Food,
+      ref: FoodOrderItem,
     },
   ],
   status: {
@@ -29,3 +30,17 @@ const foodOrder = new Schema({
 });
 
 export const FoodOrder = model("FoodOrder", foodOrder);
+
+//  "user": [
+//                 {
+//                     "_id": "68590389f2533344acac01e9",
+//                     "email": "jawline.batka@gmail.com",
+//                     "password": "afwasdafsefad",
+//                     "phoneNumber": 28942352,
+//                     "address": "HUD",
+//                     "role": "USER",
+//                     "__v": 0
+//                 }
+//             ],
+//             "totalPrice": 5000,
+//             "foodOrderItems": []

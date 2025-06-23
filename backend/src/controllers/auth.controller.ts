@@ -1,8 +1,15 @@
 import { Request, Response } from "express";
 import { User } from "../models/user.model.js";
 
-export const authRefresh = (req: Request, res: Response) => {
-  res.send("auth/refresh get huselt");
+export const authRefresh = async (req: Request, res: Response) => {
+  const { email } = req.params;
+  const user = await User.find();
+  console.log(user);
+
+  res.json({
+    success: true,
+    data: user,
+  });
 };
 export const authSignIn = async (req: Request, res: Response) => {
   try {
@@ -25,8 +32,8 @@ export const authSignIn = async (req: Request, res: Response) => {
 };
 export const authSignUp = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.create({ email, password });
+    const { email, password, phoneNumber, address } = req.body;
+    const user = await User.create({ email, password, phoneNumber, address });
     res.json({
       success: true,
       data: user,

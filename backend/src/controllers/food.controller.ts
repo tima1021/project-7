@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Food } from "../models/food.model.js";
 
 export const getAllFoods = async (req: Request, res: Response) => {
-  const foods = await Food.find();
+  const foods = await Food.find().populate("category");
   res.json({
     success: true,
     data: foods,
