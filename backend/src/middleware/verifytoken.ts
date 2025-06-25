@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-function verifyToken(req: Request, res: Response, next) {
+function verifyToken(req: Request, res: Response, next: NextFunction) {
   const token = req.header("Authorization");
   if (!token) return res.status(401).json({ error: "Access denied" });
   try {
