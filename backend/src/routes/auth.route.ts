@@ -11,7 +11,7 @@ import {
 const authRouter = express.Router();
 
 authRouter.get("/refresh", authRefresh);
-authRouter.post("/sign-in/:email", authSignIn);
+authRouter.post("/sign-in", authSignIn);
 authRouter.post("/sign-up", authSignUp);
 authRouter.post("/reset-password-request", authResetPassReq);
 authRouter.post("/verify-reset-password-request", authVerify);

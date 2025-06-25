@@ -7,27 +7,27 @@ import mongoose from "mongoose";
 import foodOrderRouter from "./routes/food.order.route.js";
 
 import foodOrderItemRouter from "./routes/food.order.item.route.js";
+import dotenv from "dotenv";
 
-mongoose.connect(
-  "mongodb+srv://togtoh:oCyqBUJ5pbXFXdrJ@cluster0.rds2ass.mongodb.net/food-delivery"
-);
+dotenv.config();
+
+mongoose.connect(process.env.MONGO_URI as string);
 
 const server = express();
 server.use(express.json());
 
-const port = 8000;
+const port = process.env.PORT;
 
 server.use("/food", foodsRouter);
 server.use("/auth", authRouter);
 server.use("/food-category", categoryRouter);
 server.use("/food-order", foodOrderRouter);
 server.use("/food-order-item", foodOrderItemRouter);
-console.log("books");
 
 server.get("/", (_req, res) => {
   res.send("hello");
 });
 
 server.listen(port, () => {
-  console.log("nmg avraarai");
+  console.log(`nmg avraarai eejee ${port}`);
 });

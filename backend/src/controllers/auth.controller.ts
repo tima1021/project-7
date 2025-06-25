@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { User } from "../models/user.model.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const authRefresh = async (req: Request, res: Response) => {
-  const { email } = req.params;
   const user = await User.find();
   console.log(user);
 
@@ -11,15 +12,28 @@ export const authRefresh = async (req: Request, res: Response) => {
     data: user,
   });
 };
+
 export const authSignIn = async (req: Request, res: Response) => {
   try {
-    const { email } = req.params;
-    const user = await User.find({ email });
-    console.log(user);
+    const { email, password } = req.body;
 
-    res.json({
+    const user = await User.findOne({ email });
+
+    const comparedPassword = bcrypt.compare(password, user?.password || "");
+    const token = jwt.sign({ userId: user?._id }, "tima1021", {
+      expiresIn: "1h",
+    });
+
+    if (!comparedPassword) {
+      res.status(200).json({
+        success: false,
+        message: " not Authenticated",
+      });
+    }
+    res.status(200).json({
       success: true,
-      data: user,
+      message: "Authenticated",
+      token: token,
     });
   } catch (error) {
     console.log(error);
@@ -31,16 +45,26 @@ export const authSignIn = async (req: Request, res: Response) => {
   }
 };
 export const authSignUp = async (req: Request, res: Response) => {
+  const { email, password, phoneNumber, address } = req.body;
   try {
-    const { email, password, phoneNumber, address } = req.body;
-    const user = await User.create({ email, password, phoneNumber, address });
-    res.json({
+    const saltRound = 10;
+    const salt = await bcrypt.genSalt(saltRound);
+
+    const hashedPassword = bcrypt.hash(password, salt);
+
+    const createdUser = await User.create({
+      email: email,
+      password: hashedPassword,
+      phoneNumber: phoneNumber,
+      address: address,
+    });
+    res.status(200).json({
       success: true,
-      data: user,
+      data: createdUser,
     });
   } catch (error) {
-    res.status(444).json({
-      success: false,
+    res.status(404).json({
+      succes: false,
       error: error,
     });
   }

@@ -6,28 +6,29 @@ import { FoodOrderItem } from "./food.order.item.model.js";
 
 const { Schema, model } = mongoose;
 
-const foodOrder = new Schema({
-  user: [
-    {
-      type: Schema.ObjectId,
-      ref: User,
+const foodOrder = new Schema(
+  {
+    user: [
+      {
+        type: Schema.ObjectId,
+        ref: User,
+      },
+    ],
+    totalPrice: { type: Number, required: true },
+    foodOrderItems: [
+      {
+        type: Schema.ObjectId,
+        ref: FoodOrderItem,
+      },
+    ],
+    status: {
+      type: String,
+      enum: ["PENDING", "CANCELED", "DELIVERED"],
+      default: "PENDING",
     },
-  ],
-  totalPrice: { type: Number, required: true },
-  foodOrderItems: [
-    {
-      type: Schema.ObjectId,
-      ref: FoodOrderItem,
-    },
-  ],
-  status: {
-    type: String,
-    enum: ["PENDING", "CANCELED", "DELIVERED"],
-    default: "PENDING",
   },
-  createdAt: Date,
-  updatedAt: Date,
-});
+  { timestamps: true }
+);
 
 export const FoodOrder = model("FoodOrder", foodOrder);
 
