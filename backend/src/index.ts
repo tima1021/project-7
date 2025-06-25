@@ -25,7 +25,7 @@ server.use("/food-order", foodOrderRouter);
 server.use("/food-order-item", foodOrderItemRouter);
 
 server.get("/", (_req, res) => {
-  res.send("hello");
+  res.send("odoo bolio");
 });
 
 server.listen(port, () => {
