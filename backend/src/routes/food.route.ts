@@ -6,11 +6,10 @@ import {
   updateFood,
   deleteFood,
 } from "../controllers/food.controller.js";
-import verifyToken from "../middleware/verifytoken.js";
 
 const foodsRouter = express.Router();
 
-foodsRouter.get("/", verifyToken, getAllFoods);
+foodsRouter.get("/", getAllFoods);
 foodsRouter.post("/", createFood);
 foodsRouter.patch("/:foodId", updateFood);
 foodsRouter.delete("/:foodId", deleteFood);
