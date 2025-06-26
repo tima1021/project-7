@@ -10,7 +10,7 @@ import verifyToken from "../middleware/verifytoken.js";
 
 const foodOrderRouter = express.Router();
 
-foodOrderRouter.get("/", getAllFoodOrder);
+foodOrderRouter.get("/", verifyToken as any, getAllFoodOrder);
 foodOrderRouter.get("/:foodOrderId", getFoodByid);
 foodOrderRouter.post("/", createFoodOrder);
 foodOrderRouter.patch("/:foodOrderId", updateFoodOrder);
