@@ -10,10 +10,10 @@ import verifyToken from "../middleware/verifytoken.js";
 
 const foodOrderRouter = express.Router();
 
-foodOrderRouter.get("/", verifyToken as any, getAllFoodOrder);
-foodOrderRouter.get("/:foodOrderId", getFoodByid);
-foodOrderRouter.post("/", createFoodOrder);
-foodOrderRouter.patch("/:foodOrderId", updateFoodOrder);
-foodOrderRouter.delete("/:foodOrderId", deleteFoodOrder);
+foodOrderRouter.get("/", getAllFoodOrder);
+foodOrderRouter.get("/:foodOrderId", verifyToken, getFoodByid);
+foodOrderRouter.post("/", verifyToken, createFoodOrder);
+foodOrderRouter.patch("/:foodOrderId", verifyToken, updateFoodOrder);
+foodOrderRouter.delete("/:foodOrderId", verifyToken, deleteFoodOrder);
 
 export default foodOrderRouter;

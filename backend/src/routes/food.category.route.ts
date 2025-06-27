@@ -6,13 +6,14 @@ import {
   updateCategory,
   getCategoryByid,
 } from "../controllers/category.controller.js";
+import verifyToken from "../middleware/verifytoken.js";
 
 const categoryRouter = express.Router();
 
 categoryRouter.get("/", getAllCategory);
 categoryRouter.get("/:categoryId", getCategoryByid);
-categoryRouter.post("/", createCategory);
-categoryRouter.patch("/:categoryId", updateCategory);
-categoryRouter.delete("/:categoryId", deleteCategory);
+categoryRouter.post("/", verifyToken, createCategory);
+categoryRouter.patch("/:categoryId", verifyToken, updateCategory);
+categoryRouter.delete("/:categoryId", verifyToken, deleteCategory);
 
 export default categoryRouter;

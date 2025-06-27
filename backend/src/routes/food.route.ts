@@ -10,10 +10,10 @@ import verifyToken from "../middleware/verifytoken.js";
 
 const foodsRouter = express.Router();
 
-foodsRouter.get("/", verifyToken as any, getAllFoods);
-foodsRouter.post("/", createFood);
-foodsRouter.patch("/:foodId", updateFood);
-foodsRouter.delete("/:foodId", deleteFood);
+foodsRouter.get("/", getAllFoods);
+foodsRouter.post("/", verifyToken, createFood);
+foodsRouter.patch("/:foodId", verifyToken, updateFood);
+foodsRouter.delete("/:foodId", verifyToken, deleteFood);
 foodsRouter.get("/:foodId", getFoodByid);
 
 export default foodsRouter;
