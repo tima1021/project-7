@@ -20,7 +20,10 @@ export const getFoodByid = async (req: Request, res: Response) => {
   try {
     const { foodOrderId } = req.params;
     const foodOrder = await FoodOrder.findById(foodOrderId)
-      .populate("foodOrderItems")
+      .populate({
+        path: "foodOrderItems",
+        populate: { path: "food", populate: { path: "category" } },
+      })
       .populate("user");
     res.json({
       success: true,

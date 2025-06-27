@@ -50,7 +50,7 @@ export const authSignUp = async (req: Request, res: Response) => {
     const saltRound = 10;
     const salt = await bcrypt.genSalt(saltRound);
 
-    const hashedPassword = bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const createdUser = await User.create({
       email: email,
