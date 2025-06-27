@@ -19,12 +19,8 @@ export const getAllFoodOrder = async (req: Request, res: Response) => {
 export const getFoodByid = async (req: Request, res: Response) => {
   try {
     const { foodOrderId } = req.params;
-    const foodOrder = await FoodOrder.findById(foodOrderId)
-      .populate({
-        path: "foodOrderItems",
-        populate: { path: "food", populate: { path: "category" } },
-      })
-      .populate("user");
+    const foodOrder = await FoodOrder.findById(foodOrderId);
+    c.populate("user");
     res.json({
       success: true,
       data: foodOrder,
@@ -39,7 +35,12 @@ export const getFoodByid = async (req: Request, res: Response) => {
 export const createFoodOrder = async (req: Request, res: Response) => {
   const foodOrder = req.body;
   const createdFoodOrder = await (
-    await (await FoodOrder.create(foodOrder)).populate("foodOrderItems")
+    await (
+      await FoodOrder.create(foodOrder)
+    ).populate({
+      path: "foodOrderItems",
+      populate: { path: "food", populate: { path: "category" } },
+    })
   ).populate("user");
 
   res.json({
@@ -59,7 +60,10 @@ export const updateFoodOrder = async (req: Request, res: Response) => {
         new: true,
       }
     )
-      .populate("foodOrderItems")
+      .populate({
+        path: "foodOrderItems",
+        populate: { path: "food", populate: { path: "category" } },
+      })
       .populate("user");
     res.json({
       success: true,
@@ -76,7 +80,12 @@ export const deleteFoodOrder = async (req: Request, res: Response) => {
   try {
     const { foodOrderId } = req.params;
 
-    const deletedFoodOrder = await FoodOrder.findByIdAndDelete(foodOrderId);
+    const deletedFoodOrder = await FoodOrder.findByIdAndDelete(foodOrderId)
+      .populate({
+        path: "foodOrderItems",
+        populate: { path: "food", populate: { path: "category" } },
+      })
+      .populate("user");
     res.json({
       success: true,
       data: deletedFoodOrder,

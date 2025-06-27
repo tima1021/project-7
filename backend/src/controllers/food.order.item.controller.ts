@@ -11,7 +11,9 @@ export const getAllFoodOrderItems = async (req: Request, res: Response) => {
 };
 export const createFoodOrderItem = async (req: Request, res: Response) => {
   const foodOrderItem = req.body;
-  const createdFoodOrderItem = await FoodOrderItem.create(foodOrderItem);
+  const createdFoodOrderItem = (
+    await FoodOrderItem.create(foodOrderItem)
+  ).populate("food");
 
   res.json({
     success: true,
@@ -30,7 +32,7 @@ export const updateFoodOrderItem = async (req: Request, res: Response) => {
         new: true,
       }
     )
-      .populate("foodOrderItems")
+      .populate("food")
       .populate("user");
     res.json({
       success: true,
@@ -49,7 +51,7 @@ export const deleteFoodOrderItem = async (req: Request, res: Response) => {
 
     const deletedFoodOrderItem = await FoodOrderItem.findByIdAndDelete(
       foodOrderItemId
-    );
+    ).populate("food");
     res.json({
       success: true,
       data: deletedFoodOrderItem,
