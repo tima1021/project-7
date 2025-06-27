@@ -19,8 +19,7 @@ export const getAllFoodOrder = async (req: Request, res: Response) => {
 export const getFoodByid = async (req: Request, res: Response) => {
   try {
     const { foodOrderId } = req.params;
-    const foodOrder = await FoodOrder.findById(foodOrderId);
-    c.populate("user");
+    const foodOrder = await FoodOrder.findById(foodOrderId).populate("user");
     res.json({
       success: true,
       data: foodOrder,

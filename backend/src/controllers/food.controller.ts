@@ -11,7 +11,7 @@ export const getAllFoods = async (req: Request, res: Response) => {
 export const getFoodByid = async (req: Request, res: Response) => {
   try {
     const { foodId } = req.params;
-    const food = await Food.findById(foodId);
+    const food = await Food.findById(foodId).populate("category");
     res.json({
       success: true,
       data: food,
@@ -25,7 +25,7 @@ export const getFoodByid = async (req: Request, res: Response) => {
 };
 export const createFood = async (req: Request, res: Response) => {
   const food = req.body;
-  const createdFood = await Food.create(food);
+  const createdFood = (await Food.create(food)).populate("category");
   res.json({
     success: true,
     data: createdFood,
@@ -38,7 +38,7 @@ export const updateFood = async (req: Request, res: Response) => {
 
     const food = await Food.findByIdAndUpdate(foodId, updatedFood, {
       new: true,
-    });
+    }).populate("category");
     res.json({
       success: true,
       data: food,
@@ -54,7 +54,9 @@ export const deleteFood = async (req: Request, res: Response) => {
   try {
     const { foodId } = req.params;
 
-    const deletedfood = await Food.findByIdAndDelete(foodId);
+    const deletedfood = await Food.findByIdAndDelete(foodId).populate(
+      "category"
+    );
     res.json({
       success: true,
       data: deletedfood,
